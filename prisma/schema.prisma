@@ -13,20 +13,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  name String
+model User {
+  id   String @id @default(uuid())
+  fullname  String   
+  email     String   @unique
+  password  String
   role Role
 
+  Payment Payment[]
 }
-model Payment{
-  id String @id @default(uuid())
-  date DateTime 
+
+model Payment {
+  id             String     @id @default(uuid())
+  date           DateTime   @default(now())
+  voucherNo      Int
+  payee          String
+  paymentDetails String
+  accountCode String
+  beneficiaryCode String
+  budgetCode String
+  exchangeRate Int
+  amountFigures Int
+  amountWords String
+  status Status
+
+
+  user           User       @relation(fields: [userId], references: [id])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  userId         String
+  Document       Document[]
+}
+
+model Document {
+  id        String   @id @default(uuid())
+  filepath  String // File path to the document
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  payment   Payment  @relation(fields: [paymentId], references: [id])
+
+  paymentId String
 }
 
 
-enum Role{
+enum Role {
   INITIATOR
   REVIEWER
   APPROVER
+}
+
+enum Status {
+  INITIATED
+  REVIEWED
+  APPROVED
+  PROCESSED
 }
