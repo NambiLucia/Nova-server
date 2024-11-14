@@ -1,6 +1,7 @@
 const express =require('express')
 
-const userRoute =require('./routes/userroute')
+const userRoute =require('./routes/userroute');
+const paymentRoute = require('./routes/paymentroute');
 
 
 
@@ -17,6 +18,7 @@ app.use(express.json())
 
 //middleware for endpoints
 app.use('/api/v1/users',userRoute)
+app.use('/api/v1/payments',paymentRoute)
 
 
 app.get('/',(req,res)=>{

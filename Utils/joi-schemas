@@ -7,3 +7,18 @@ exports.userSchema=Joi.object({
     role:Joi.string().min(3).max(50).required(),
   
 })
+
+exports.paymentSchema = Joi.object({
+    date:Joi.date().required(),
+    voucherNo:Joi.number().integer().required(),
+    payee:Joi.string().min(3).max(50).required(),        
+    paymentDetails:Joi.string().min(3).max(300).required(), 
+    accountCode:Joi.string().min(3).max(50).required(),
+    beneficiaryCode:Joi.string().min(3).max(50).required(),
+    budgetCode:Joi.number().integer().required(), 
+    exchangeRate:Joi.number().integer().required(), 
+    amountFigures:Joi.number().integer().required(), 
+    amountWords:Joi.number().integer().required(),
+    status:Joi.string().min(3).max(50).required(),
+
+})
