@@ -60,6 +60,7 @@ enum Role {
   INITIATOR
   REVIEWER
   APPROVER
+  ADMIN
 }
 
 enum Status {
