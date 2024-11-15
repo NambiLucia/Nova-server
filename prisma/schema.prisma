@@ -48,6 +48,8 @@ model Payment {
 model Document {
   id        String   @id @default(uuid())
   filepath  String // File path to the document
+  filename  String
+  filetype String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   payment   Payment  @relation(fields: [paymentId], references: [id])
