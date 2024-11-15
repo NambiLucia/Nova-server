@@ -14,7 +14,7 @@ exports.validateToken = (req, res, next) => {
           message: "FORBIDDEN:Failed to access token",
         });
       } else {
-        req.user.id = user.id;
+        req.user = user;
         next();
       }
     });

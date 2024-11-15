@@ -15,10 +15,10 @@ exports.paymentSchema = Joi.object({
     paymentDetails:Joi.string().min(3).max(300).required(), 
     accountCode:Joi.string().min(3).max(50).required(),
     beneficiaryCode:Joi.string().min(3).max(50).required(),
-    budgetCode:Joi.number().integer().required(), 
+    budgetCode:Joi.string().min(3).max(50).required(),
     exchangeRate:Joi.number().integer().required(), 
     amountFigures:Joi.number().integer().required(), 
-    amountWords:Joi.number().integer().required(),
+    amountWords:Joi.string().min(3).max(100).required(),
     status:Joi.string().min(3).max(50).required(),
 
 })

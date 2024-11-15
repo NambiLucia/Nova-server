@@ -41,6 +41,7 @@ exports.getPayments = async (req,res)=>{
 
 exports.createPayment =async(req,res)=>{
   try{
+    const userId =req.user.id;
     const {
         date,
         voucherNo,
@@ -52,20 +53,20 @@ exports.createPayment =async(req,res)=>{
         exchangeRate, 
         amountFigures, 
         amountWords, 
-        status
+        status,
     }=req.body;
 
-    const paymentDateISO = toISODateString(date);
-    if(!paymentDateISO){
-        return res.status(400).json({
-            message:"Invalid payment date format"
-        })
+    // const paymentDateISO = toISODateString(date);
+    // if(!paymentDateISO){
+    //     return res.status(400).json({
+    //         message:"Invalid payment date format"
+    //     })
 
-    }
+    // }
 
     const newPayment =await prisma.payment.create({
         data:{
-        date:paymentDateISO,
+        date,
         voucherNo,
         payee,         
         paymentDetails, 
@@ -75,7 +76,12 @@ exports.createPayment =async(req,res)=>{
         exchangeRate, 
         amountFigures, 
         amountWords, 
-        status 
+        status,
+        user:{
+            connect:{
+                id:userId
+            }
+        }
         }
     })
 
@@ -85,7 +91,7 @@ exports.createPayment =async(req,res)=>{
 
   }
   catch(error){
-  return res.staus(500).json({
+  return res.status(500).json({
            error: error.message
         })
   }

@@ -1,3 +1,3 @@
-exports.toISODateString = (date) =>{
-    return new Date(date).toISOString;
+exports.toISODateString = (dateString) =>{
+    return new Date(dateString).toISOString;
 }
