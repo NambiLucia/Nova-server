@@ -1,7 +1,10 @@
 const express =require('express')
+var cors = require("cors");
 
 const userRoute =require('./routes/userroute');
 const paymentRoute = require('./routes/paymentroute');
+const documentRoute = require('./routes/documentroute');
+
 
 
 
@@ -14,12 +17,15 @@ const app =express();
 
 //middleware
 app.use(express.json())
+app.use(cors());
+
 const upload =require('./upload');
 
 
 //middleware for endpoints
 app.use('/api/v1/users',userRoute)
 app.use('/api/v1/payments',paymentRoute)
+app.use('/api/v1/documents',documentRoute)
 
 
 app.post('/upload', upload.single('file'), (req, res) => {

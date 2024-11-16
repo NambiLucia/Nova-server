@@ -1,5 +1,6 @@
 const express = require('express')
 
+
 const paymentRoute =express.Router()
 
 const paymentcontroller = require('../controllers/paymentController')
@@ -10,7 +11,7 @@ const { validateToken } = require('../Utils/validateToken')
 
 paymentRoute
 .get('/',paymentcontroller.getPayments)
-.post('/create-payment',schemaValidator(paymentSchema),validateToken, paymentcontroller.createPayment)
+.post('/create-payment',schemaValidator(paymentSchema),paymentcontroller.uploadDocs,validateToken, paymentcontroller.createPayment)
 
 
 

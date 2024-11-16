@@ -4,9 +4,36 @@ require('dotenv/config');
 const jwt = require("jsonwebtoken");
 const { toISODateString } = require('../Utils/dateUtils');
 const { date } = require('joi');
+const multer =require('multer');
+const { error } = require('console');
+
+const multerStorage =multer.diskStorage({
+    destination:(req,file,cb) =>{
+        cb(null,'upload-docs\docs')
+    },
+    filename:(req,file,cb) =>{
+      const extension =file.mimetype.split('/')[1];
+      cb(null,`payment-${req.payment.id}-${Date.now()}.${extension}`)
+    }
+});
+
+const multerFilter = (req,file,cb)=>{
+    if(file.mimetype.startsWith('pdf')){
+        cb(null.true)
+    }
+    else{
+        cb(error,false)
+    }
+}
 
 
 
+const upload = multer({
+    storage:multerStorage,
+    fileFilter:multerFilter
+})
+
+exports.uploadDocs = upload.single('document')
 
 exports.getPayments = async (req,res)=>{
 
