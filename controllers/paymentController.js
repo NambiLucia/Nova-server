@@ -5,11 +5,12 @@ const jwt = require("jsonwebtoken");
 const { toISODateString } = require('../Utils/dateUtils');
 const { date } = require('joi');
 const multer =require('multer');
+const path =require('path');
 const { error } = require('console');
 
 const multerStorage =multer.diskStorage({
     destination:(req,file,cb) =>{
-        cb(null,'upload-docs\docs')
+        cb(null,path.join(__dirname,'../upload-docs/docs'))
     },
     filename:(req,file,cb) =>{
       const extension =file.mimetype.split('/')[1];
@@ -18,19 +19,22 @@ const multerStorage =multer.diskStorage({
 });
 
 const multerFilter = (req,file,cb)=>{
-    if(file.mimetype.startsWith('pdf')){
+    if(file.mimetype === 'application/pdf'){
         cb(null.true)
     }
     else{
-        cb(error,false)
+        cb(new Error('Only PDF files are allowed'), false); // Reject non-PDF files
     }
 }
 
 
-
+// initialize Multer
 const upload = multer({
     storage:multerStorage,
-    fileFilter:multerFilter
+    fileFilter:multerFilter,
+    limits:{
+        fileSize:5 * 1024 * 1024, // Limit files to 5MB
+    }
 })
 
 exports.uploadDocs = upload.single('document')
@@ -110,7 +114,32 @@ exports.createPayment =async(req,res)=>{
             }
         }
         }
+    });
+
+//if a file is uploaded
+if(req.file){
+    const { filename, mimetype, path: filepath } = req.file;
+
+    await prisma.document.create({
+        data:{
+            filename,
+            filetype:mimetype,
+            filepath,
+            payment:{
+                connect:{
+                    id:newPayment.id
+                }
+            }
+        }
     })
+
+
+
+
+}
+
+
+
 
     return res.status(201).json({
         message: "Payment created successfully", newPayment 
