@@ -96,6 +96,10 @@ exports.createPayment =async(req,res)=>{
 
     // }
 
+    if (!date || !voucherNo || !payee || !paymentDetails || !accountCode || !beneficiaryCode || !budgetCode || !exchangeRate || !amountFigures|| !amountWords || !status || !document) {
+        return res.status(400).json({ error: "All fields are required." });
+      }
+
     const newPayment =await prisma.payment.create({
         data:{
         date,
