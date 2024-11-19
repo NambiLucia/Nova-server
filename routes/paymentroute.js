@@ -1,18 +1,20 @@
-const express = require('express')
+const express = require("express");
 
+const paymentRoute = express.Router();
 
-const paymentRoute =express.Router()
-
-const paymentcontroller = require('../controllers/paymentController')
-const { schemaValidator } = require('../Utils/schema-validator')
-const { paymentSchema } = require('../Utils/joi-schemas')
-const { validateToken } = require('../Utils/validateToken')
-
+const paymentcontroller = require("../controllers/paymentController");
+const { schemaValidator } = require("../Utils/schema-validator");
+const { paymentSchema } = require("../Utils/joi-schemas");
+const { validateToken } = require("../Utils/validateToken");
 
 paymentRoute
-.get('/',paymentcontroller.getPayments)
-.post('/create-payment',schemaValidator(paymentSchema),paymentcontroller.uploadDocs,validateToken, paymentcontroller.createPayment)
+  .get("/", paymentcontroller.getPayments)
+  .post(
+    "/create-payment",
+    //schemaValidator(paymentSchema),
+    validateToken,
+    paymentcontroller.uploadDocs,
+    paymentcontroller.createPayment
+  );
 
-
-
-module.exports= paymentRoute;
+module.exports = paymentRoute

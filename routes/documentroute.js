@@ -12,4 +12,4 @@ documentRoute
 
 
 
-module.exports= paymentRoute;
+module.exports= documentRoute;

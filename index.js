@@ -1,5 +1,7 @@
 const express =require('express')
-var cors = require("cors");
+
+const cors = require("cors");
+var bodyParser = require('body-parser')
 
 const userRoute =require('./routes/userroute');
 const paymentRoute = require('./routes/paymentroute');
@@ -17,6 +19,8 @@ const app =express();
 
 //middleware
 app.use(express.json())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 const upload =require('./upload');
@@ -28,10 +32,10 @@ app.use('/api/v1/payments',paymentRoute)
 app.use('/api/v1/documents',documentRoute)
 
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    // Handle the uploaded file
-    res.json({ message: 'File uploaded successfully!' });
-  });
+// app.post('/upload', upload.single('file'), (req, res) => {
+//     // Handle the uploaded file
+//     res.json({ message: 'File uploaded successfully!' });
+//   });
 
 
 

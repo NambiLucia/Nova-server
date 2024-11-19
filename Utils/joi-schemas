@@ -9,16 +9,17 @@ exports.userSchema=Joi.object({
 })
 
 exports.paymentSchema = Joi.object({
-    date:Joi.date().required(),
-    voucherNo:Joi.number().integer().required(),
+    date:Joi.string().isoDate().required(),
+    voucherNo:Joi.string().required(),
     payee:Joi.string().min(3).max(50).required(),        
     paymentDetails:Joi.string().min(3).max(300).required(), 
     accountCode:Joi.string().min(3).max(50).required(),
     beneficiaryCode:Joi.string().min(3).max(50).required(),
     budgetCode:Joi.string().min(3).max(50).required(),
-    exchangeRate:Joi.number().integer().required(), 
-    amountFigures:Joi.number().integer().required(), 
+    exchangeRate:Joi.string().required(), 
+    amountFigures:Joi.string().required(), 
     amountWords:Joi.string().min(3).max(100).required(),
-    status:Joi.string().min(3).max(50).required(),
+    status: Joi.string().valid("INITIATED","REVIEWED","APPROVED","PROCESSED").required()
+    document: Joi.any().meta({ swaggerType: 'file' }).optional()
 
 })

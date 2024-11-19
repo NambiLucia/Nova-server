@@ -14,13 +14,13 @@ const multerStorage =multer.diskStorage({
     },
     filename:(req,file,cb) =>{
       const extension =file.mimetype.split('/')[1];
-      cb(null,`payment-${req.payment.id}-${Date.now()}.${extension}`)
+      cb(null,`payment-${Date.now()}.${extension}`)
     }
 });
 
 const multerFilter = (req,file,cb)=>{
     if(file.mimetype === 'application/pdf'){
-        cb(null.true)
+        cb(null,true)
     }
     else{
         cb(new Error('Only PDF files are allowed'), false); // Reject non-PDF files
@@ -85,6 +85,7 @@ exports.createPayment =async(req,res)=>{
         amountFigures, 
         amountWords, 
         status,
+        document
     }=req.body;
 
     // const paymentDateISO = toISODateString(date);
@@ -98,21 +99,22 @@ exports.createPayment =async(req,res)=>{
     const newPayment =await prisma.payment.create({
         data:{
         date,
-        voucherNo,
+        voucherNo: parseInt(voucherNo),
         payee,         
         paymentDetails, 
         accountCode, 
         beneficiaryCode,
         budgetCode, 
-        exchangeRate, 
-        amountFigures, 
+        exchangeRate: parseFloat(exchangeRate), 
+        amountFigures: parseFloat(amountFigures), 
         amountWords, 
         status,
         user:{
             connect:{
                 id:userId
             }
-        }
+        },
+        Document
         }
     });
 
@@ -142,7 +144,7 @@ if(req.file){
 
 
     return res.status(201).json({
-        message: "Payment created successfully", newPayment 
+        message: "Payment created successfully", newPayment,document
     })
 
   }
