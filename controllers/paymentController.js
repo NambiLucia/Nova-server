@@ -114,7 +114,7 @@ exports.createPayment =async(req,res)=>{
                 id:userId
             }
         },
-        Document
+        document
         }
     });
 

@@ -20,6 +20,5 @@ exports.paymentSchema = Joi.object({
     amountFigures:Joi.string().required(), 
     amountWords:Joi.string().min(3).max(100).required(),
     status: Joi.string().valid("INITIATED","REVIEWED","APPROVED","PROCESSED").required()
-    document: Joi.any().meta({ swaggerType: 'file' }).optional()
 
 })
