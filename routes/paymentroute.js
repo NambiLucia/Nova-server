@@ -15,6 +15,8 @@ paymentRoute
     validateToken,
     paymentcontroller.uploadDocs,
     paymentcontroller.createPayment
-  );
+  )
+  .patch("/update-payment/:id",paymentcontroller.updatePaymentById)
+  .delete('/delete-payment/:id',validateToken,paymentcontroller.deletePaymentById)
 
 module.exports = paymentRoute
