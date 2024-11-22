@@ -11,6 +11,10 @@ userRoute
 .get('/',usercontroller.getUsers)
 .post('/register',schemaValidator(userSchema),usercontroller.register)
 .post('/login',usercontroller.login)
+.patch('/update-user/:id',usercontroller.updateUserById)
+.delete('/delete-user/:id',usercontroller.deleteUserById)
+
+
 
 
 module.exports= userRoute;

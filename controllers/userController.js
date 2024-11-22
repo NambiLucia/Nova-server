@@ -1,4 +1,4 @@
-const {PrismaClient} = require('@prisma/client')
+const {PrismaClient, Role} = require('@prisma/client')
 const prisma = new PrismaClient()
 var jwt = require('jsonwebtoken');
 require('dotenv/config');
@@ -24,6 +24,13 @@ exports.getUsers = async (req,res)=>{
 exports.register = async(req,res)=>{
     try{
         const {fullname,email,password,role}=req.body; 
+        const existingUser= await prisma.user.findUnique({
+            where:{email}
+        })
+
+        if(existingUser){
+            return res.status(400).json({message:"email already in use"})
+        }
         const hashedPassword = await bcrypt.hash(password,10)
     
         const newUser = await prisma.user.create({
@@ -42,7 +49,7 @@ exports.register = async(req,res)=>{
     catch(error){
         console.log(error)
         return res.status(500)
-        .json({"message":"Error occured while registering new User"})
+        .json({error:"Error occured while registering new User"})
 
     }
 }
@@ -102,3 +109,43 @@ exports.login =async(req,res)=>{
         .json({error:error.message})
     }
 }
+
+exports.updateUserById = async (req, res) => {
+    try {
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: req.params.id,
+        },
+        data: req.body,
+      });
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User not found"});
+      }
+      return res.status(200).json({message:`User updated`,updatedUser});
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ error: error.message });
+    }
+  };
+
+  exports.deleteUserById =async(req,res) =>{
+    try{
+        const deletedUser= await prisma.user.delete({
+            where:{
+                id:req.params.id
+            }
+        }) 
+        if(deletedUser){
+            return res.status(200).json({error:'User deleted', deletedUser});
+        } else {
+        return res.status(404).json({message:`Sorry user does not exist`})}
+    }
+    catch(error){
+        return res.status(404)
+        .json({error:error.message})
+    }
+
+  }
+
+
