@@ -84,7 +84,23 @@ exports.getSomePayments =async(req,res) =>{
     }
 }
 
+exports.sortpaymentsByDate =async(req,res) =>{
+    try{
+        const sortPayments = await prisma.payment.findMany({
+            orderBy:{
+                createdAt:'desc'
+            }
+        })
 
+        return res.json(sortPayments)
+
+
+    }
+
+    catch(error){
+        return res.status(500).json({error:error.message})
+    }
+}
 
 
 

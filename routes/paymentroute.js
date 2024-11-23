@@ -10,6 +10,7 @@ const { validateToken } = require("../Utils/validateToken");
 paymentRoute
   .get("/", paymentcontroller.getPayments)
   .get("/limit", paymentcontroller.getSomePayments)
+  .get("/sort", paymentcontroller.sortpaymentsByDate)
   .post(
     "/create-payment",
     //schemaValidator(paymentSchema),
