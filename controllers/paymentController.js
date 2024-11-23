@@ -70,6 +70,24 @@ exports.getPayments = async (req,res)=>{
 
 }
 
+exports.getSomePayments =async(req,res) =>{
+    try{
+        const somePayments = await prisma.payment.findMany({
+            take:1
+        })
+        res.json(somePayments)
+    }
+    catch(error){
+        return res.status(500).json({
+            error:error.message
+        })
+    }
+}
+
+
+
+
+
 exports.createPayment =async(req,res)=>{
   try{
     const userId =req.user.id;

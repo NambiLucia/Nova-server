@@ -9,7 +9,7 @@ const { schemaValidator } = require('../Utils/schema-validator')
 
 userRoute
 .get('/',usercontroller.getUsers)
-.get('/',usercontroller.getSomeUsers)
+.get('/limit',usercontroller.getSomeUsers)
 .post('/register',schemaValidator(userSchema),usercontroller.register)
 .post('/login',usercontroller.login)
 .patch('/update-user/:id',usercontroller.updateUserById)

@@ -9,6 +9,7 @@ const { validateToken } = require("../Utils/validateToken");
 
 paymentRoute
   .get("/", paymentcontroller.getPayments)
+  .get("/limit", paymentcontroller.getSomePayments)
   .post(
     "/create-payment",
     //schemaValidator(paymentSchema),
