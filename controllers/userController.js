@@ -21,6 +21,29 @@ exports.getUsers = async (req,res)=>{
 
 }
 
+exports.getSomeUsers =async(req,res) =>{
+    try{
+
+    let someUsers =await prisma.user.findMany({
+        take:5
+    })
+    res.json(someUsers)
+
+
+    }
+
+
+    catch(error){
+        return res.json({
+            error: error.message
+         })
+    }
+}
+
+
+
+
+
 exports.register = async(req,res)=>{
     try{
         const {fullname,email,password,role}=req.body; 

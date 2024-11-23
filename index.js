@@ -1,5 +1,7 @@
 const express =require('express')
-
+const fs = require("fs");
+const morgan = require("morgan");
+const path = require("path");
 const cors = require("cors");
 var bodyParser = require('body-parser')
 
@@ -23,7 +25,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const upload =require('./upload');
+// create a write stream (in append mode)
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname, "logs", "request_logs.txt"),
+    { flags: "a" }
+  );
+  
+  // setup the logger
+  app.use(morgan("combined", { stream: accessLogStream }));
+
+
+// const upload =require('./upload');
 
 
 //middleware for endpoints
