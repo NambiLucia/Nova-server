@@ -9,7 +9,10 @@ const bcrypt = require('bcrypt');
 exports.getUsers = async (req,res)=>{
 
     try{
-        let users =await prisma.user.findMany()
+        const limit =parseInt(req.query.limit) || 10;
+        let users =await prisma.user.findMany({
+            take:limit
+        })
         res.json(users)
     }
     catch(error){
@@ -21,24 +24,6 @@ exports.getUsers = async (req,res)=>{
 
 }
 
-exports.getSomeUsers =async(req,res) =>{
-    try{
-
-    let someUsers =await prisma.user.findMany({
-        take:5
-    })
-    res.json(someUsers)
-
-
-    }
-
-
-    catch(error){
-        return res.status(500).json({
-            error: error.message
-         })
-    }
-}
 
 
 

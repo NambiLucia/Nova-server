@@ -42,7 +42,10 @@ exports.uploadDocs = upload.single('document')
 exports.getPayments = async (req,res)=>{
 
     try{
+        const limit = parseInt(req.query.limit) || 10
         let payments =await prisma.payment.findMany({
+            take:limit,
+
             include:{
                 user:{
                     select:{
@@ -53,7 +56,7 @@ exports.getPayments = async (req,res)=>{
         })
         res.json({
             payments,
-           // requestedAt:new Date(Date.now()).toISODateString,
+            requestedAt: new Date().toISOString(),
             results:payments.length
         })
 
@@ -70,19 +73,7 @@ exports.getPayments = async (req,res)=>{
 
 }
 
-exports.getSomePayments =async(req,res) =>{
-    try{
-        const somePayments = await prisma.payment.findMany({
-            take:1
-        })
-        res.json(somePayments)
-    }
-    catch(error){
-        return res.status(500).json({
-            error:error.message
-        })
-    }
-}
+
 
 exports.sortpaymentsByDate =async(req,res) =>{
     try{
