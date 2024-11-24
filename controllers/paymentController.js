@@ -45,6 +45,9 @@ exports.getPayments = async (req,res)=>{
         const limit = parseInt(req.query.limit) || 10
         let payments =await prisma.payment.findMany({
             take:limit,
+            orderBy:{
+                createdAt:'desc'
+            },
 
             include:{
                 user:{
@@ -55,9 +58,10 @@ exports.getPayments = async (req,res)=>{
             }
         })
         res.json({
-            payments,
+            results:payments.length,
+            payments:payments,
             requestedAt: new Date().toISOString(),
-            results:payments.length
+            
         })
 
      
@@ -75,23 +79,6 @@ exports.getPayments = async (req,res)=>{
 
 
 
-exports.sortpaymentsByDate =async(req,res) =>{
-    try{
-        const sortPayments = await prisma.payment.findMany({
-            orderBy:{
-                createdAt:'desc'
-            }
-        })
-
-        return res.json(sortPayments)
-
-
-    }
-
-    catch(error){
-        return res.status(500).json({error:error.message})
-    }
-}
 
 
 
