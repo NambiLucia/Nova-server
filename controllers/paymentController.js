@@ -54,7 +54,8 @@ exports.getPayments = async (req,res)=>{
                     select:{
                         fullname:true
                     }
-                }
+                },
+                Document:true
             }
         })
         res.json({
@@ -96,8 +97,8 @@ exports.createPayment =async(req,res)=>{
         exchangeRate, 
         amountFigures, 
         amountWords, 
-        status,
-        document
+        status
+    
     }=req.body;
 
     // const paymentDateISO = toISODateString(date);
@@ -111,6 +112,13 @@ exports.createPayment =async(req,res)=>{
     // if (!date || !voucherNo || !payee || !paymentDetails || !accountCode || !beneficiaryCode || !budgetCode || !exchangeRate || !amountFigures|| !amountWords || !status || !document) {
     //     return res.status(400).json({ error: "All fields are required."});
     //   }
+
+    if (!req.file) {
+        return res.status(400).json({ error: "PDF file is required" });
+      }
+  
+
+
 
     const newPayment =await prisma.payment.create({
         data:{
@@ -130,38 +138,33 @@ exports.createPayment =async(req,res)=>{
                 id:userId
             }
         },
-        document
+       // Document
         }
     });
 
 //if a file is uploaded
-if(req.file){
+try {
     const { filename, mimetype, path: filepath } = req.file;
-
     await prisma.document.create({
-        data:{
+        data: {
             filename,
-            filetype:mimetype,
+            filetype: mimetype,
             filepath,
-            payment:{
-                connect:{
-                    id:newPayment.id
-                }
-            }
-        }
-    })
-
-
-
-
+            payment: 
+            { connect: 
+                { id: newPayment.id } 
+            },
+        },
+    });
+} catch (err) {
+    return res.status(500).json({ error: "File upload failed. Please try again." });
 }
 
-
-
-
-    return res.status(201).json({
-        message: "Payment created successfully", newPayment,document
-    })
+return res.status(201).json({
+    message: "Payment created successfully",
+    payment: newPayment,
+    document: { filename: req.file.filename, path: req.file.path },
+});
 
   }
   catch(error){
