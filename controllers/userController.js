@@ -120,6 +120,10 @@ exports.login =async(req,res)=>{
 
 exports.updateUserById = async (req, res) => {
     try {
+        if (!req.params.id) {
+            return res.status(400).json({ error: "User ID is required" });
+          }
+
       const updatedUser = await prisma.user.update({
         where: {
           id: req.params.id,

@@ -7,7 +7,7 @@ exports.getDocuments = async (req,res)=>{
     try{
         let documents=await prisma.document.findMany({
             include:{
-                payment
+                payment:true
             }
         })
         res.json({
