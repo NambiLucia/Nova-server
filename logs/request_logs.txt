@@ -117,3 +117,7 @@
 ::ffff:127.0.0.1 - - [27/Nov/2024:11:14:51 +0000] "POST /api/v1/users/register HTTP/1.1" 400 32 "-" "-"
 ::ffff:127.0.0.1 - - [27/Nov/2024:11:14:51 +0000] "PATCH /api/v1/users/update-user/ HTTP/1.1" 404 166 "-" "-"
 ::ffff:127.0.0.1 - - [27/Nov/2024:11:14:51 +0000] "GET /api/v1/documents HTTP/1.1" 200 1671 "-" "-"
+::1 - - [27/Nov/2024:11:33:09 +0000] "PATCH /api/v1/users/update-user/ HTTP/1.1" 404 166 "-" "PostmanRuntime/7.43.0"
+::1 - - [27/Nov/2024:11:33:25 +0000] "PATCH /api/v1/users/update-user/eac1e3fc-6e5f-402d-b7e0-e7ad0550e HTTP/1.1" 500 429 "-" "PostmanRuntime/7.43.0"
+::1 - - [27/Nov/2024:11:33:42 +0000] "PATCH /api/v1/users/update-user/eac1e3fc-6e5f-402d-b7e0-e7ad0550ecf5 HTTP/1.1" 200 223 "-" "PostmanRuntime/7.43.0"
+::ffff:127.0.0.1 - - [28/Nov/2024:11:56:39 +0000] "GET /api/v1/userss/ HTTP/1.1" 404 70 "-" "Thunder Client (https://www.thunderclient.com)"

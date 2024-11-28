@@ -35,6 +35,24 @@ const accessLogStream = fs.createWriteStream(
 app.use('/api/v1/users',userRoute)
 app.use('/api/v1/payments',paymentRoute)
 app.use('/api/v1/documents',documentRoute)
+app.all('*',(req,res,next) =>{
+  return res.status(404).json({
+    status:"Fail",
+    message:`Cant find ${req.originalUrl} on this Server`
+  })
+})
+// //error handling middleware
+// app.use((err,req,res,next)=>{
+//   err.statusCode =err.statusCode || 500;
+//   err.status = err.status || 'error'
+//   return res.status(err.statusCode).json({
+//     status:err.status,
+//     message:err.message
+//   })
+// })
+
+
+
 
 
 // app.post('/upload', upload.single('file'), (req, res) => {

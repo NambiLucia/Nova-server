@@ -37,7 +37,7 @@ const upload = multer({
     }
 })
 
-exports.uploadDocs = upload.single('document')
+exports.uploadDocs = upload.array('document',10)
 
 exports.getPayments = async (req,res)=>{
 
