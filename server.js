@@ -55,10 +55,7 @@ app.all('*',(req,res,next) =>{
 
 
 
-// app.post('/upload', upload.single('file'), (req, res) => {
-//     // Handle the uploaded file
-//     res.json({ message: 'File uploaded successfully!' });
-//   });
+
 
 
 
