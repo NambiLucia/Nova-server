@@ -6,6 +6,7 @@ const paymentcontroller = require("../controllers/paymentController");
 const { schemaValidator } = require("../Utils/schema-validator");
 const { paymentSchema } = require("../Utils/joi-schemas");
 const { validateToken } = require("../Utils/validateToken");
+const { restrictRole } = require("../Utils/restrictRole");
 
 paymentRoute
   .get("/", paymentcontroller.getPayments)
@@ -17,6 +18,6 @@ paymentRoute
     paymentcontroller.createPayment
   )
   .patch("/update-payment/:id",paymentcontroller.updatePaymentById)
-  .delete('/delete-payment/:id',validateToken,paymentcontroller.deletePaymentById)
+  .delete('/delete-payment/:id',validateToken,restrictRole("ADMIN"),paymentcontroller.deletePaymentById)
 
 module.exports = paymentRoute
