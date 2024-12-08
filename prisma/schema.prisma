@@ -14,42 +14,44 @@ datasource db {
 }
 
 model User {
-  id   String @id @default(uuid())
-  fullname  String   
-  email     String   @unique
-  password  String
-  role Role
+  id       String @id @default(uuid())
+  fullname String
+  email    String @unique
+  password String
+  role     Role
 
   Payment Payment[]
 }
 
 model Payment {
-  id             String     @id @default(uuid())
-  date           DateTime   @default(now())
-  voucherNo      Int @unique
-  payee          String
-  paymentDetails String
-  accountCode String
-  beneficiaryCode String
-  budgetCode String
-  exchangeRate Int
-  amountFigures Int
-  amountWords String
-  status Status
+  id              String      @id @default(uuid())
+  date            DateTime    @default(now())
+  voucherNo       Int         @unique
+  payee           String
+  paymentDetails  String
+  accountCode     Account     @relation(fields: [accountId], references: [id])
+  beneficiaryCode Beneficiary @relation(fields: [beneficiaryId], references: [id])
+  budgetCode      Budget      @relation(fields: [budgetId], references: [id])
+  exchangeRate    Int
+  amountFigures   Int
+  amountWords     String
+  status          Status
 
-
-  user           User       @relation(fields: [userId], references: [id],onDelete: Cascade)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  userId         String
-  Document       Document[]
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  userId        String
+  Document      Document[]
+  accountId     String
+  beneficiaryId String
+  budgetId      String
 }
 
 model Document {
   id        String   @id @default(uuid())
   filepath  String // File path to the document
   filename  String
-  filetype String?
+  filetype  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   payment   Payment  @relation(fields: [paymentId], references: [id], onDelete: Cascade)
@@ -57,20 +59,31 @@ model Document {
   paymentId String
 }
 
-model Beneficiary{
-  id String @id @default(uuid())
-  name String
-  code String
+model Beneficiary {
+  id      String    @id @default(uuid())
+  name    String
+  code    String @unique
+  Payment Payment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-model Budget{
-  id String @id @default(uuid())
-  name String
-  code String
+
+model Budget {
+  id      String    @id @default(uuid())
+  name    String
+  code    String @unique
+  payment Payment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-model Account{
-  id String @id @default(uuid())
-  name String
-  code String
+
+model Account {
+  id      String    @id @default(uuid())
+  name    String
+  code    String @unique
+  Payment Payment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Role {

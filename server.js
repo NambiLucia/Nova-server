@@ -8,6 +8,7 @@ var bodyParser = require('body-parser')
 const userRoute =require('./routes/userroute');
 const paymentRoute = require('./routes/paymentroute');
 const documentRoute = require('./routes/documentroute');
+const budgetRoute = require('./routes/budgetroute');
 
 
 const app =express();
@@ -35,6 +36,7 @@ const accessLogStream = fs.createWriteStream(
 app.use('/api/v1/users',userRoute)
 app.use('/api/v1/payments',paymentRoute)
 app.use('/api/v1/documents',documentRoute)
+app.use('/api/v1/budgetcodes',budgetRoute)
 app.all('*',(req,res,next) =>{
   return res.status(404).json({
     status:"Fail",
