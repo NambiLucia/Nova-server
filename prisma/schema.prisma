@@ -63,7 +63,7 @@ model Beneficiary {
   id      String    @id @default(uuid())
   name    String
   code    String @unique
-  Payment Payment[]
+  payment Payment[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -81,7 +81,7 @@ model Account {
   id      String    @id @default(uuid())
   name    String
   code    String @unique
-  Payment Payment[]
+  payment Payment[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -22,7 +22,7 @@ exports.paymentSchema = Joi.object({
     status: Joi.string().valid("INITIATED","REVIEWED","APPROVED","PROCESSED").required()
 
 })
-exports.budgetSchema=Joi.object({
+exports.codeSchema=Joi.object({
     name:Joi.string().min(3).max(50).required(),
     code: Joi.string().min(3).max(100).required()
    
