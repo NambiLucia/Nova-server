@@ -10,6 +10,7 @@ const paymentRoute = require('./routes/paymentroute');
 const documentRoute = require('./routes/documentroute');
 const budgetRoute = require('./routes/budgetroute');
 const beneficiaryRoute = require('./routes/beneficiaryroute');
+const accountRoute = require('./routes/accountroute');
 
 
 const app =express();
@@ -39,6 +40,8 @@ app.use('/api/v1/payments',paymentRoute)
 app.use('/api/v1/documents',documentRoute)
 app.use('/api/v1/budgetcodes',budgetRoute)
 app.use('/api/v1/beneficiarycodes',beneficiaryRoute)
+app.use('/api/v1/accountcodes',accountRoute)
+
 app.all('*',(req,res,next) =>{
   return res.status(404).json({
     status:"Fail",
