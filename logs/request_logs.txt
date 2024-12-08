@@ -208,3 +208,5 @@
 ::1 - - [08/Dec/2024:12:40:17 +0000] "GET /api/v1/accountcodes/ HTTP/1.1" 200 200 "-" "PostmanRuntime/7.43.0"
 ::1 - - [08/Dec/2024:12:40:36 +0000] "DELETE /api/v1/accountcodes/delete-account-code/629883f9-56e2-4f79-93ed-8d1504506ef3 HTTP/1.1" 404 66 "-" "PostmanRuntime/7.43.0"
 ::1 - - [08/Dec/2024:12:41:16 +0000] "DELETE /api/v1/accountcodes/delete-account-code/629883f9-56e2-4f79-93ed-8d1504506ef3 HTTP/1.1" 200 218 "-" "PostmanRuntime/7.43.0"
+::1 - - [08/Dec/2024:12:52:27 +0000] "GET /api/v1/documents HTTP/1.1" 200 28 "-" "PostmanRuntime/7.43.0"
+::1 - - [08/Dec/2024:12:52:29 +0000] "GET /api/v1/documents HTTP/1.1" 200 28 "-" "PostmanRuntime/7.43.0"

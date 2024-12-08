@@ -27,3 +27,22 @@ exports.getDocuments = async (req,res)=>{
     }
 
 }
+
+exports.deleteDocumentById =async(req,res) =>{
+    try{
+        const deletedDocument= await prisma.document.delete({
+            where:{
+                id:req.params.id
+            }
+        }) 
+        if(deletedDocument){
+            return res.status(200).json({message:'Document deleted successfully', deletedDocument});
+        } else {
+        return res.status(404).json({error:`Sorry Document doesnt exist or is missing`})}
+    }
+    catch(error){
+        return res.status(404)
+        .json({error:error.message})
+    }
+
+  }
