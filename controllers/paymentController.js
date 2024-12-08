@@ -203,9 +203,9 @@ exports.updatePaymentById = async (req, res) => {
             }
         }) 
         if(deletedPayment){
-            return res.status(200).json({error:'Payment deleted', deletedPayment});
+            return res.status(200).json({message:'Payment deleted', deletedPayment});
         } else {
-        return res.status(404).json({message:`Sorry payment doesnt exist `})}
+        return res.status(404).json({error:`Sorry payment doesnt exist `})}
     }
     catch(error){
         return res.status(404)

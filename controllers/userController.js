@@ -149,9 +149,9 @@ exports.updateUserById = async (req, res) => {
             }
         }) 
         if(deletedUser){
-            return res.status(200).json({error:'User deleted', deletedUser});
+            return res.status(200).json({message:'User deleted', deletedUser});
         } else {
-        return res.status(404).json({message:`Sorry user does not exist`})}
+        return res.status(404).json({error:`Sorry user does not exist`})}
     }
     catch(error){
         return res.status(404)
