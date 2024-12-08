@@ -18,6 +18,6 @@ paymentRoute
     paymentcontroller.createPayment
   )
   .patch("/update-payment/:id",paymentcontroller.updatePaymentById)
-  .delete('/delete-payment/:id',validateToken,restrictRole("ADMIN"),paymentcontroller.deletePaymentById)
+  .delete('/delete-payment/:id',validateToken,restrictRole('ADMIN'),paymentcontroller.deletePaymentById)
 
 module.exports = paymentRoute

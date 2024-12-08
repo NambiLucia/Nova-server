@@ -77,7 +77,7 @@ exports.login =async(req,res)=>{
             if(matchPassword){
                 //create token
                 const userToken =await jwt.sign(
-                {id:user.id,email:user.email},
+                {id:user.id,email:user.email,role:user.role},
                 process.env.SECRET_KEY,{expiresIn:'1hr'}
 
 

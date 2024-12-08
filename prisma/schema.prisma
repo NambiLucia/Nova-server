@@ -57,6 +57,21 @@ model Document {
   paymentId String
 }
 
+model Beneficiary{
+  id String @id @default(uuid())
+  name String
+  code String
+}
+model Budget{
+  id String @id @default(uuid())
+  name String
+  code String
+}
+model Account{
+  id String @id @default(uuid())
+  name String
+  code String
+}
 
 enum Role {
   INITIATOR
