@@ -34,10 +34,10 @@ exports.createBudgetCode =async(req,res)=>{
         where:{code}
       })
 
-      const codePattern = /^ACC-\d+$/;
+      const codePattern = /^BUD-\d+$/;
       if(!codePattern.test(code)){
         return res.status(400).json({
-            error:"Budget codes must follow the format 'ACC-<number>'"
+            error:"Budget codes must follow the format 'BUD-<number>'"
         })
       }
 

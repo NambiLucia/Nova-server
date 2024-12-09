@@ -37,7 +37,7 @@ const upload = multer({
     }
 })
 
-exports.uploadDocs = upload.array('document',10)
+exports.uploadDocs = upload.single('document',10)
 
 exports.getPayments = async (req,res)=>{
 
@@ -91,7 +91,7 @@ exports.createPayment =async(req,res)=>{
         voucherNo,
         payee,         
         paymentDetails, 
-        accountCode, 
+        accountCode,
         beneficiaryCode,
         budgetCode, 
         exchangeRate, 
@@ -126,9 +126,21 @@ exports.createPayment =async(req,res)=>{
         voucherNo: parseInt(voucherNo),
         payee,         
         paymentDetails, 
-        accountCode, 
-        beneficiaryCode,
-        budgetCode, 
+        accountCode: {
+            connect: {
+                code: accountCode,
+            },
+        },
+        beneficiaryCode :{
+            connect:{
+                code:beneficiaryCode
+            }
+        },
+        budgetCode:{
+            connect:{
+                code:budgetCode
+            }
+        },  
         exchangeRate: parseFloat(exchangeRate), 
         amountFigures: parseFloat(amountFigures), 
         amountWords, 
@@ -138,7 +150,7 @@ exports.createPayment =async(req,res)=>{
                 id:userId
             }
         },
-       // Document
+        //document
         }
     });
 
