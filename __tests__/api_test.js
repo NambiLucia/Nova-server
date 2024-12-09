@@ -42,15 +42,15 @@ describe("User tests", () => {
         email: user.email,
         password: user.password,
       })
-      .expect(400) 
+      .expect(404) 
  
   });
 });
 
-describe("Document test", () => {
-  test("Should pass when all documents are displayed", async () => {
+describe("account codes test", () => {
+  test("Should pass when all account codes are displayed", async () => {
      await request(app)
-      .get("/api/v1/documents")
+      .get("/api/v1/accountcodes")
       .expect(200)
  
   });
