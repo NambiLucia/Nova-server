@@ -42,12 +42,12 @@ app.use('/api/v1/budgetcodes',budgetRoute)
 app.use('/api/v1/beneficiarycodes',beneficiaryRoute)
 app.use('/api/v1/accountcodes',accountRoute)
 
-app.all('*',(req,res,next) =>{
-  return res.status(404).json({
-    status:"Fail",
-    message:`Cant find ${req.originalUrl} on this Server`
-  })
-})
+// app.all('*',(req,res,next) =>{
+//   return res.status(404).json({
+//     status:"Fail",
+//     message:`Cant find ${req.originalUrl} on this Server`
+//   })
+// })
 // //error handling middleware
 // app.use((err,req,res,next)=>{
 //   err.statusCode =err.statusCode || 500;
