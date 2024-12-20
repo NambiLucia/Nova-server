@@ -58,7 +58,7 @@ exports.getPayments = async (req,res)=>{
                 Document:true
             }
         })
-        res.json({
+        res.status(200).json({
             results:payments.length,
             payments:payments,
             requestedAt: new Date().toISOString(),
@@ -76,6 +76,37 @@ exports.getPayments = async (req,res)=>{
 
     }
 
+}
+
+
+exports.getPaymentsById=async(req,res)=>{
+    try{
+        userId=req.params.id;
+        const payments= await prisma.payment.findMany({
+            where:{
+            userId:userId
+            },
+            orderBy:{
+                createdAt:'desc'
+            },
+           
+        })
+
+        res.status(200)
+            .json({
+            results:payments.length,
+            payments:payments,
+            requestedAt: new Date().toISOString(),
+            
+        })
+
+    }
+    catch(error){
+        return res.status(500).json({
+           error: error.message
+        })
+
+    }
 }
 
 

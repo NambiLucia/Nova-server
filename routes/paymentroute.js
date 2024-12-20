@@ -10,6 +10,7 @@ const { restrictRole } = require("../Utils/restrictRole");
 
 paymentRoute
   .get("/", paymentcontroller.getPayments)
+  .get("/user-payments/:id", paymentcontroller.getPayments)
   .post(
     "/create-payment",
     //schemaValidator(paymentSchema),
