@@ -78,6 +78,7 @@ exports.getPayments = async (req,res)=>{
 
 }
 
+//Get payments by userID
 
 exports.getPaymentsById=async(req,res)=>{
     try{
@@ -108,6 +109,37 @@ exports.getPaymentsById=async(req,res)=>{
 
     }
 }
+
+//Get payments by Payment ID
+exports.getPaymentsByPaymentId=async(req,res)=>{
+    try{
+      
+        const payments= await prisma.payment.findMany({
+            where:{
+           id:req.params.id
+            },
+
+        })
+
+        res.status(200)
+            .json({
+            payments:payments,
+            requestedAt: new Date().toISOString(),
+            
+        })
+
+    }
+    catch(error){
+        return res.status(500).json({
+           error: error.message
+        })
+
+    }
+}
+
+
+
+
 
 
 
