@@ -55,7 +55,24 @@ exports.getPayments = async (req,res)=>{
                         fullname:true
                     }
                 },
-                Document:true
+                Document:true,
+                accountCode:{
+                    select:{
+                        code:true
+                    }
+                },
+                beneficiaryCode:{
+                    select:{
+                        code:true
+                    }
+                },
+                budgetCode:{
+                    select:{
+                        code:true
+                    }
+                },
+      
+      
             }
         })
         res.status(200).json({
@@ -114,10 +131,27 @@ exports.getPaymentsById=async(req,res)=>{
 exports.getPaymentsByPaymentId=async(req,res)=>{
     try{
       
-        const payments= await prisma.payment.findMany({
+        const payments= await prisma.payment.findUnique({
             where:{
            id:req.params.id
             },
+            include: {
+                accountCode:{
+                    select:{
+                        code:true
+                    }
+                },
+                beneficiaryCode:{
+                    select:{
+                        code:true
+                    }
+                },
+                budgetCode:{
+                    select:{
+                        code:true
+                    }
+                },
+              },
 
         })
 
