@@ -151,6 +151,12 @@ exports.getPaymentsByPaymentId=async(req,res)=>{
                         code:true
                     }
                 },
+
+                Document:{
+                    select:{
+                        filename:true
+                    }
+                }
               },
 
         })
