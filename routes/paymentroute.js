@@ -12,6 +12,7 @@ paymentRoute
   .get("/", paymentcontroller.getPayments)
   .get("/user-payments/:id", paymentcontroller.getPayments)
   .get("/single-payment/:id",paymentcontroller.getPaymentsByPaymentId)
+  .get("/payment-status",paymentcontroller.getPaymentStatus)
   .post(
     "/create-payment",
     //schemaValidator(paymentSchema),

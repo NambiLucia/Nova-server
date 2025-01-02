@@ -7,6 +7,7 @@ const { date } = require('joi');
 const multer =require('multer');
 const path =require('path');
 const { error } = require('console');
+const { pipeline } = require('stream');
 
 const multerStorage =multer.diskStorage({
     destination:(req,file,cb) =>{
@@ -177,7 +178,28 @@ exports.getPaymentsByPaymentId=async(req,res)=>{
     }
 }
 
-
+exports.getPaymentStatus = async (req, res) => {
+    try {
+      // Use Prisma's groupBy to group payments by status and count them
+      const paymentStatus = await prisma.payment.groupBy({
+        by: ['status'], // Group by the 'status' column
+        _count: {
+          status: true, // Count the number of rows for each status
+        },
+      });
+  
+      // Format the data for the response
+      const formattedData = paymentStatus.map((item) => ({
+        status: item.status,
+        count: item._count.status,
+      }));
+  
+      res.status(200).json(formattedData);
+    } catch (error) {
+      console.error('Error fetching payment status:', error);
+      res.status(500).json({ message: 'Error fetching payment status' });
+    }
+  };
 
 
 
