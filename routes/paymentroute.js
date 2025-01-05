@@ -10,7 +10,7 @@ const { restrictRole } = require("../Utils/restrictRole");
 
 paymentRoute
   .get("/", paymentcontroller.getPayments)
-  .get("/user-payments/:id", paymentcontroller.getPayments)
+  .get("/user-payments/:id",paymentcontroller.getPaymentsByUserId)
   .get("/single-payment/:id",paymentcontroller.getPaymentsByPaymentId)
   .get("/payment-status",paymentcontroller.getPaymentStatus)
   .post(

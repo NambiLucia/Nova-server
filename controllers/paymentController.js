@@ -98,12 +98,12 @@ exports.getPayments = async (req,res)=>{
 
 //Get payments by userID
 
-exports.getPaymentsById=async(req,res)=>{
+exports.getPaymentsByUserId=async(req,res)=>{
     try{
-        userId=req.params.id;
+        //const userid=req.params.id;
         const payments= await prisma.payment.findMany({
             where:{
-            userId:userId
+            userId:req.params.id
             },
             orderBy:{
                 createdAt:'desc'
@@ -127,6 +127,13 @@ exports.getPaymentsById=async(req,res)=>{
 
     }
 }
+
+
+
+
+
+  
+  
 
 //Get payments by Payment ID
 exports.getPaymentsByPaymentId=async(req,res)=>{
