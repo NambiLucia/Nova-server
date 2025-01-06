@@ -185,11 +185,44 @@ exports.getPaymentsByPaymentId=async(req,res)=>{
     }
 }
 
+// exports.getPaymentStatus = async (req, res) => {
+//     try {
+//       // Use Prisma's groupBy to group payments by status and count them
+//       const paymentStatus = await prisma.payment.groupBy({
+//         by: ['status'], // Group by the 'status' column
+//         _count: {
+//           status: true, // Count the number of rows for each status
+//         },
+//       });
+  
+//       // Format the data for the response
+//       const formattedData = paymentStatus.map((item) => ({
+//         status: item.status,
+//         count: item._count.status,
+//       }));
+  
+//       res.status(200).json(formattedData);
+//     } catch (error) {
+//       console.error('Error fetching payment status:', error);
+//       res.status(500).json({ message: 'Error fetching payment status' });
+//     }
+//   };
+
 exports.getPaymentStatus = async (req, res) => {
     try {
-      // Use Prisma's groupBy to group payments by status and count them
+      const userId = req.user.id; // Assuming `req.user` contains the authenticated user's details
+  
+      // Validate userId
+      if (!userId) {
+        return res.status(401).json({ message: "User not authenticated." });
+      }
+  
+      // Use Prisma's groupBy to group payments by status and filter by userId
       const paymentStatus = await prisma.payment.groupBy({
         by: ['status'], // Group by the 'status' column
+        where: {
+          userId: userId, // Filter by the logged-in user's ID
+        },
         _count: {
           status: true, // Count the number of rows for each status
         },
@@ -201,14 +234,23 @@ exports.getPaymentStatus = async (req, res) => {
         count: item._count.status,
       }));
   
-      res.status(200).json(formattedData);
+      // Ensure all statuses are included, even if the count is zero
+      const allStatuses = ['INITIATED', 'APPROVED', 'REJECTED']; // Add more statuses if necessary
+      const completeData = allStatuses.map((status) => {
+        const found = formattedData.find((item) => item.status === status);
+        return {
+          status,
+          count: found ? found.count : 0,
+        };
+      });
+  
+      res.status(200).json(completeData);
     } catch (error) {
       console.error('Error fetching payment status:', error);
       res.status(500).json({ message: 'Error fetching payment status' });
     }
   };
-
-
+  
 
 
 
