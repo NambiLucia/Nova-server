@@ -126,7 +126,59 @@ exports.getPaymentsByUserId=async(req,res)=>{
         })
 
     }
-}
+}   
+
+
+
+// exports.getPaymentsByUserId = async (req, res) => {
+//     try {
+//       const userId = req.params.id;
+  
+//       // Group payments by status and count the occurrences for each status
+//       const paymentStatusCount = await prisma.payment.groupBy({
+//         by: ['status'], // Group by the 'status' column
+//         where: {
+//           userId: userId, // Filter by the logged-in user's ID
+//         },
+//         _count: {
+//           status: true, // Count the number of rows for each status
+//         },
+//       });
+  
+//       // Format the data to return a count for each status
+//       const formattedData = paymentStatusCount.map((item) => ({
+//         status: item.status,
+//         count: item._count.status,
+//       }));
+  
+//       // Ensure all statuses are included, even if the count is zero
+//       const allStatuses = ['INITIATED', 'APPROVED', 'REJECTED']; // Add more statuses if needed
+//       const completeData = allStatuses.map((status) => {
+//         const found = formattedData.find((item) => item.status === status);
+//         return {
+//           status,
+//           count: found ? found.count : 0,
+//         };
+//       });
+  
+//       // Return the response with the formatted data
+//       res.status(200).json({
+//         results: completeData.length,
+//         paymentStatus: completeData,
+//         requestedAt: new Date().toISOString(),
+//       });
+//     } catch (error) {
+//       console.error('Error fetching payment status:', error);
+//       return res.status(500).json({
+//         error: error.message,
+//       });
+//     }
+//   };
+
+  
+
+
+  
 
 
 
