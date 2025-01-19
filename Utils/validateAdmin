@@ -1,0 +1,26 @@
+const prisma = require('@prisma/client');
+const { PrismaClient } = prisma;
+const prismaClient = new PrismaClient();
+
+exports.validateAdmin = async (req, res, next) => {
+  try {
+    
+    if (!req.user) {
+      return res.status(403).json({ message: "Forbidden: No user authenticated" });
+    }
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+    });
+
+    if (!user || user.role !== "ADMIN") {
+      return res.status(403).json({ message: "Forbidden: Admin access required" });
+    }
+
+    next();
+  } catch (error) {
+    console.error("Error authorizing admin:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

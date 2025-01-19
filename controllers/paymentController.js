@@ -8,6 +8,7 @@ const multer =require('multer');
 const path =require('path');
 const { error } = require('console');
 const { pipeline } = require('stream');
+const { idText } = require('typescript');
 
 const multerStorage =multer.diskStorage({
     destination:(req,file,cb) =>{
@@ -411,6 +412,67 @@ return res.status(201).json({
         })
   }
 }
+
+
+
+exports.approvePayment = async (req, res) => {
+  const { id } = req.params; // The payment ID
+
+  try {
+    // Find the payment by ID
+    const payment = await prisma.payment.findUnique({
+      where: { id: id },
+    });
+
+   
+    if (!payment) {
+      return res.status(404).json({ message: "Payment not found" });
+    }
+
+    // Check if the payment is already approved
+    if (payment.status === "APPROVED") {
+      return res.status(400).json({ message: "Payment is already approved" });
+    }
+
+    // Update the payment status to "APPROVED"
+    const updatedPayment = await prisma.payment.update({
+      where: { id: id },
+      data: { status: "APPROVED" },
+    });
+
+    // Respond with the updated payment
+    res.status(200).json({
+      message: "Payment approved successfully",
+      payment: updatedPayment,
+    });
+  } catch (error) {
+    console.error("Error approving payment:", error);
+    res.status(500).json({
+      message: "Error approving payment",
+      error: error.message,
+    });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

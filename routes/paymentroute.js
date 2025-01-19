@@ -7,6 +7,7 @@ const { schemaValidator } = require("../Utils/schema-validator");
 const { paymentSchema } = require("../Utils/joi-schemas");
 const { validateToken } = require("../Utils/validateToken");
 const { restrictRole } = require("../Utils/restrictRole");
+const {validateAdmin} =require("../Utils/validateAdmin")
 
 paymentRoute
   .get("/", paymentcontroller.getPayments)
@@ -20,6 +21,7 @@ paymentRoute
     paymentcontroller.uploadDocs,
     paymentcontroller.createPayment
   )
+  .patch("/approve-payment/:id",validateToken,restrictRole('ADMIN'),paymentcontroller.approvePayment)
   .patch("/update-payment/:id",paymentcontroller.updatePaymentById)
   .delete('/delete-payment/:id',validateToken,restrictRole('ADMIN'),paymentcontroller.deletePaymentById)
 
