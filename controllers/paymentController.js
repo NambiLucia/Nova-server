@@ -25,7 +25,7 @@ const multerFilter = (req,file,cb)=>{
         cb(null,true)
     }
     else{
-        cb(new Error('Only PDF files are allowed'), false); // Reject non-PDF files
+        cb(new Error('Only PDF files are allowed'), false); 
     }
 }
 
