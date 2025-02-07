@@ -13,6 +13,8 @@ userRoute
 .post('/login',usercontroller.login)
 .patch('/update-user/:id',usercontroller.updateUserById)
 .delete('/delete-user/:id',usercontroller.deleteUserById)
+.post('/forgot-password',usercontroller.forgotPassword)
+.post('/reset-password',usercontroller.resetPassword)
 
 
 

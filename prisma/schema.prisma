@@ -19,6 +19,8 @@ model User {
   email    String @unique
   password String
   role     Role
+  resetToken       String?   // Store the reset token
+  resetTokenExpiry DateTime? // Store when the token expires
 
   Payment Payment[]
 }
