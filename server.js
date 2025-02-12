@@ -72,6 +72,9 @@ app.use('/api/v1/accountcodes',accountRoute)
 
 
 
+// app.get("/reset-password", (req, res) => {
+//   res.send("Reset password page");
+// });
 
 
 app.get('/',(req,res)=>{

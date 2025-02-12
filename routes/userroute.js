@@ -9,6 +9,9 @@ const { schemaValidator } = require('../Utils/schema-validator')
 
 userRoute
 .get('/',usercontroller.getUsers)
+.get("/reset-password", (req, res) => {
+    res.send("Reset password page");
+  })
 .post('/register',schemaValidator(userSchema),usercontroller.register)
 .post('/login',usercontroller.login)
 .patch('/update-user/:id',usercontroller.updateUserById)
