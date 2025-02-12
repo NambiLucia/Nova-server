@@ -77,7 +77,7 @@ exports.login =async(req,res)=>{
             const matchPassword = await bcrypt.compare(password,user.password)
             if(matchPassword){
                 //create token
-                const resetToken =await jwt.sign(
+                const userToken =await jwt.sign(
                 {id:user.id,email:user.email,role:user.role,name:user.fullname},
                 process.env.SECRET_KEY,{expiresIn:'1hr'}
 
@@ -86,9 +86,9 @@ exports.login =async(req,res)=>{
             //send token back as response
             const date = new Date()
             res.status(200).json({
-                message:"Successful User Login",resetToken
+                message:"Successful User Login",userToken
             })
-            console.log(resetToken,`Token Generated at:- ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+            console.log(userToken,`Token Generated at:- ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 
         }
                 
