@@ -77,7 +77,7 @@ exports.login =async(req,res)=>{
             const matchPassword = await bcrypt.compare(password,user.password)
             if(matchPassword){
                 //create token
-                const userToken =await jwt.sign(
+                const resetToken =await jwt.sign(
                 {id:user.id,email:user.email,role:user.role,name:user.fullname},
                 process.env.SECRET_KEY,{expiresIn:'1hr'}
 
@@ -86,9 +86,9 @@ exports.login =async(req,res)=>{
             //send token back as response
             const date = new Date()
             res.status(200).json({
-                message:"Successful User Login",userToken
+                message:"Successful User Login",resetToken
             })
-            console.log(userToken,`Token Generated at:- ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+            console.log(resetToken,`Token Generated at:- ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
 
         }
                 
@@ -161,71 +161,82 @@ exports.updateUserById = async (req, res) => {
 
   }
 
-exports.forgotPassword = async(req,res) =>{
-    try{
-        const {email} = req.body;
-       const user =await prisma.user.findUnique({
-        where:{
-            email
-        }
-       })
 
-       if(!user){
-        return res.status(404).json({ message: "User not found" });
-       }
-       const userToken =await jwt.sign(
-        {id:user.id,email:user.email,role:user.role,name:user.fullname},
-        process.env.SECRET_KEY,{expiresIn:'15m'}
-
-    )
-    // Create reset password link
-    const resetLink =`${process.env.FRONTEND_URL}/reset-password/${userToken}`;
-
-    //send email
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-
-
-        tls: {
-            rejectUnauthorized: false, //  Ignores self-signed certificate errors
+  exports.forgotPassword = async (req, res) => {
+    try {
+      const { email } = req.body;
+  
+      // Validate email input
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+      }
+  
+      // Find the user by email
+      const user = await prisma.user.findUnique({
+        where: {
+          email: email,
         },
       });
-      
+  
+      // If user doesn't exist, return an error
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Generate a JWT token for password reset
+      const resetToken = jwt.sign(
+        { id:user.id,email: user.email},
+        process.env.SECRET_KEY,
+        { expiresIn: "15m" } // Token expires in 15 minutes
+      );
+  
+      // Create reset password link
+      const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+      console.log("Reset Link:", resetLink); 
+  
+      // Configure nodemailer transporter
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+        tls: {
+          rejectUnauthorized: false, // Ignores self-signed certificate errors
+        },
+      });
+  
+      // Define email options
       const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: 'myfriend@yahoo.com',
-        subject: email,
-        text: `<p>Click the link below to reset your password (valid for 15 minutes):</p>
-                   <a href="${resetLink}">${resetLink}</a>`,
+        to: email, // Send to the user's email
+        subject: "NOVA Payment Password Reset Request",
+        text: `Click the link below to reset your password (valid for 15 minutes):\n\n${resetLink}\n\nIf you did not request this, please ignore this email.`,
       };
-      
+  
+      // Send the email
       await transporter.sendMail(mailOptions);
-
-      return res.json({ message: "Password reset link sent to email" })
-
-
+      console.log("Reset email sent to:", email); // For debugging purposes
+  
+      // Respond with success message
+      return res.status(200).json({ message: "Password reset link sent succcesfully to your email" });
+    } catch (error) {
+      console.error("Error in forgotPassword:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
-    catch(error){
-        console.error(error);
-        res.status(500).json({ message: "Internal Server Error" });
-    }
-}
-
+  };
 exports.resetPassword = async (req, res) => {
     try {
-        const { userToken, newPassword } = req.body;  
-        if (!userToken) {
+   
+        const { resetToken,newPassword } = req.body;  
+        if (!resetToken) {
             return res.status(400).json({ message: "Token is required" });
         }
 
         // Verify the token
         let decoded;
         try {
-            decoded = jwt.verify(userToken, process.env.SECRET_KEY); 
+            decoded = jwt.verify(resetToken, process.env.SECRET_KEY); 
         } catch (error) {
             return res.status(400).json({ message: "Invalid or expired token" });
         }
@@ -251,6 +262,7 @@ exports.resetPassword = async (req, res) => {
         res.status(200).json({ message: "Password reset successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: "Invalid or expired token" });
     }
 };
+ 

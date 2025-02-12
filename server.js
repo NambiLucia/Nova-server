@@ -20,6 +20,13 @@ app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+// // Serve static files from the Vite build folder
+// app.use(express.static(path.join(__dirname, "dist")));
+
+// // Handle all routes by serving index.html
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "dist", "index.html"));
+// });
 
 // create a write stream (in append mode)
 const accessLogStream = fs.createWriteStream(
@@ -31,7 +38,7 @@ const accessLogStream = fs.createWriteStream(
   app.use(morgan("combined", { stream: accessLogStream }));
 
 
-// const upload =require('./upload');
+
 
 
 //middleware for endpoints
