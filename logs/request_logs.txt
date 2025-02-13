@@ -2438,3 +2438,5 @@
 ::1 - - [12/Feb/2025:10:07:15 +0000] "POST /api/v1/users/forgot-password HTTP/1.1" 200 65 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
 ::1 - - [12/Feb/2025:10:07:43 +0000] "POST /api/v1/users/forgot-password HTTP/1.1" 200 65 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
 ::1 - - [12/Feb/2025:10:08:00 +0000] "POST /api/v1/users/forgot-password HTTP/1.1" 200 65 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+::1 - - [13/Feb/2025:09:20:57 +0000] "POST /api/v1/beneficiarycodes/create-beneficiary-code HTTP/1.1" 201 223 "-" "PostmanRuntime/7.43.0"
+::1 - - [13/Feb/2025:09:21:21 +0000] "DELETE /api/v1/beneficiarycodes/delete-beneficiary-code/4a676ecc-bec0-495d-ae3d-cbd283e40ac5 HTTP/1.1" 200 220 "-" "PostmanRuntime/7.43.0"
