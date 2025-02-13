@@ -24,16 +24,16 @@ This is the backend service for the **Nova Payment Management System**, built wi
 ## 📌 Setup & Installation
 
 ### 1 **Clone the Repository**
-```sh
+
 git clone https://github.com/your-username/nova-backend.git
 cd nova-backend
 
 ### 2 **Install Dependencies**
-```sh
+
 npm install
 
 ### 2 ** Run Database Migrations**
-```sh
+
 npx prisma migrate dev --name init
 ### 3 ** Start the Server**
 Start the Server
