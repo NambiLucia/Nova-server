@@ -41,7 +41,7 @@ This is the backend service for the **Nova Payment Management System**, built wi
 
 ### 📌 API Endpoints
 This Rest API has the following endpoints:
-Users
+**`/users`**
 | Method | Endpoint | Description |
 |--------|---------|-------------|
 | `GET`  | `/users` | Get all registered users |
@@ -49,7 +49,6 @@ Users
 | `POST` | `/users/login` | Login a registered user |
 | `POST` | `/users/forgot-password` | Send reset link to email |
 | `POST` | `/users/reset-password` | Set new password |
-
 | `PATCH` | `/users/update-user/:id` | Update a registered user |
 | `DELETE` | `/users/delete-user/:id` | Delete a registered user |
 
