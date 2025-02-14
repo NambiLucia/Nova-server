@@ -211,7 +211,7 @@ exports.updateUserById = async (req, res) => {
         from: process.env.EMAIL_USER,
         to: email, // Send to the user's email
         subject: "NOVA Payment Password Reset Request",
-        text: `Click the link below to reset your password (valid for 15 minutes):\n\n${resetLink}\n\nIf you did not request this, please ignore this email.`,
+        text: `Click the link below to reset your password (valid for 15 minutes):\n${resetLink}\n\nIf you did not request this, please ignore this email.`,
       };
   
       // Send the email
