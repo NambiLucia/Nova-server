@@ -191,7 +191,8 @@ exports.updateUserById = async (req, res) => {
       );
   
       // Create reset password link
-      const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+      const resetLink = `${process.env.FRONTEND_URL.trim()}/reset-password?token=${resetToken}`;
+
       console.log("Reset Link:", resetLink); 
   
       // Configure nodemailer transporter
@@ -211,7 +212,7 @@ exports.updateUserById = async (req, res) => {
         from: process.env.EMAIL_USER,
         to: email, // Send to the user's email
         subject: "NOVA Payment Password Reset Request",
-        text: `Click the link below to reset your password (valid for 15 minutes):${resetLink}\n\nIf you did not request this, please ignore this email.`,
+        text: `Click the link below to reset your password (valid for 15 minutes):\n${resetLink}\n\nIf you did not request this, please ignore this email.`,
       };
   
       // Send the email
