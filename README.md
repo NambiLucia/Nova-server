@@ -1,6 +1,6 @@
 # Nova Payment Management System REST API
 # Overview
-This is the backend service for the **Nova Payment Management System**, built with **Node.js**, **Express**, and **PostgreSQL** (managed with **Prisma**). It provides a secure and efficient way to manage organizational payments.  
+This is the backend service for the **Nova Payment Management System**, built with **Node.js**, **Express**, and **PostgreSQL** (managed with **Prisma**). It provides a secure and efficient way for organizations to manage their payments, eliminating the need for manual paperwork and in-person approvals.  
 
 ## 🚀 Features
 - **User Authentication**: JWT-based authentication (Register, Login, Forgot Password, Reset Password).
