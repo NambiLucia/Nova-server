@@ -56,7 +56,7 @@ exports.createBeneficiaryCode =async(req,res)=>{
   
   
   return res.status(201).json({
-      message: "New Budget Code created successfully",
+      message: "New Beneficiary Code created successfully",
       BeneficiaryCode: newCode,
   });
   
